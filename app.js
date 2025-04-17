@@ -15,7 +15,7 @@ mongoose
     app.listen(port, () => {
       console.log(`http://localhost:${port}/`);
     });
-  })
+  }) 
   .catch((err) => {
     console.log(err);
   });
