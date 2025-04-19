@@ -5,17 +5,16 @@ const mongoose = require("mongoose");
 app.use(express.urlencoded({ extended: true }));
 const Mydata = require("./models/myDataSchema");
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   Mydata.find()
     .then((result) => {
-      console.log(result);
+      res.render("home", { mytitle: "Home page", arr: result });
     })
     .catch((err) => {
       console.log(err);
     });
-
-  res.render("home", { mytitle: "Home page" });
 });
 
 app.get("/index.html", (req, res) => {
@@ -48,3 +47,4 @@ app.post("/", (req, res) => {
       console.log(err);
     });
 });
+
