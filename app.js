@@ -7,7 +7,7 @@ const Mydata = require("./models/myDataSchema");
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.sendFile("./views/home.html", { root: __dirname });
+  res.render("home");
 });
 
 app.get("/index.html", (req, res) => {
