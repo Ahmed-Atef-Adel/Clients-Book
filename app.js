@@ -7,7 +7,15 @@ const Mydata = require("./models/myDataSchema");
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.render("home", {mytitle: "Home page"});
+  Mydata.find()
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  res.render("home", { mytitle: "Home page" });
 });
 
 app.get("/index.html", (req, res) => {
