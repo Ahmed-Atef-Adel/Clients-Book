@@ -3,10 +3,12 @@ const app = express();
 const port = 3000;
 const mongoose = require("mongoose");
 app.use(express.urlencoded({ extended: true }));
-const Mydata = require("./models/myDataSchema");
+const Mydata = require("./models/customerSchema");
+const User = require("./models/customerSchema");
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
+// Get request
 app.get("/", (req, res) => {
   res.render("index", {});
 });
@@ -21,6 +23,21 @@ app.get("/user/view.html", (req, res) => {
 
 app.get("/user/edit.html", (req, res) => {
   res.render("user/edit");
+});
+
+// Psot request
+
+app.post("/user/add.html", (req, res) => {
+  const user = new User(req.body);
+  user
+    .save()
+    .then(() => {
+      console.log(req.body);
+      res.redirect("/user/add.html");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 mongoose
