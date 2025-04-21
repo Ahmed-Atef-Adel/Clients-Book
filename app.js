@@ -9,8 +9,17 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 // Get request
+
 app.get("/", (req, res) => {
-  res.render("index", {});
+  console.log('--------------------')
+  User.find()
+    .then((result) => {
+      res.render("index", {arr: result});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
 });
 
 app.get("/user/add.html", (req, res) => {
@@ -33,7 +42,7 @@ app.post("/user/add.html", (req, res) => {
     .save()
     .then(() => {
       console.log(req.body);
-      res.redirect("/user/add.html");
+      res.redirect("/");
     })
     .catch((err) => {
       console.log(err);
