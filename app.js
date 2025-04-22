@@ -11,23 +11,28 @@ app.use(express.static("public"));
 // Get request
 
 app.get("/", (req, res) => {
-  console.log('--------------------')
+  console.log("-------------------");
   User.find()
     .then((result) => {
-      res.render("index", {arr: result});
+      res.render("index", { arr: result });
     })
     .catch((err) => {
       console.log(err);
     });
-
 });
 
 app.get("/user/add.html", (req, res) => {
   res.render("user/add");
 });
 
-app.get("/user/view.html", (req, res) => {
-  res.render("user/view");
+app.get("/user/:id", (req, res) => {
+  User.findById(req.params.id)
+    .then((result) => {
+      res.render("user/view", { item: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/user/edit.html", (req, res) => {
