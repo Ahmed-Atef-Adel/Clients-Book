@@ -39,7 +39,7 @@
 
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Ali Hassan</li>
+            <li class="breadcrumb-item active" aria-current="page"><%= item.firstName %> <%= item.lastName %></li>
           </ol>
 
 
@@ -173,9 +173,11 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-danger">
-                Delete
-              </button>
+              <form action="/edit/<%= item._id %>?_method=Delete" method="post" >
+                <button type="submit" class="btn btn-danger">
+                  Delete
+                </button>
+              </form>
             </div>
           </div>
         </div>
