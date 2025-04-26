@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 var moment = require("moment");
 var methodOverride = require("method-override");
-app.use(methodOverride("_method"));
+app.use(methodOverride("_method"));  
 
 // Get request
 
