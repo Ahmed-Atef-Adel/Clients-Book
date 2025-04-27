@@ -41,6 +41,11 @@
           class="text-center mx-auto table mt-5 table-striped table-bordered"
         >
           <thead>
+            <% if (arr == 0) { %>
+            <tr>
+              <th colspan="7" class="text-center">No data to display</th>
+            </tr>
+               <% } else {  %>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Full Name</th>
@@ -49,9 +54,10 @@
               <th scope="col">Age</th>
               <th scope="col">Last updated</th>
               <th scope="col">Action</th>
-            </tr>
-          </thead>
+            </tr> 
+            <% } %>
 
+          </thead>
 
           <tbody>
             <% arr.forEach((item, index) => { %>

@@ -97,7 +97,7 @@ mongoose
   })
   .catch((err) => {
     console.log(err);
-  });
+  }); 
 
 app.post("/", (req, res) => {
   console.log(req.body);
