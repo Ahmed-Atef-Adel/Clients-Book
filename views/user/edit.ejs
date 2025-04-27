@@ -57,7 +57,7 @@
           <div class="col-md-6">
             <label for="inputfirstName4" class="form-label">First Name:</label>
             <input
-              placeholder="Ali..."
+              placeholder="<%= item.firstName %>"
               type="text"
               class="form-control"
               id="inputfirstName4"
@@ -66,7 +66,7 @@
           <div class="col-md-6">
             <label for="inputlastName4" class="form-label">Last Name:</label>
             <input
-              placeholder="Hassan..."
+              placeholder="<%= item.lastName %>"
               type="text"
               class="form-control"
               id="inputlastName4"
@@ -76,7 +76,7 @@
           <div class="col-md-6">
             <label for="inputemail4" class="form-label">Email:</label>
             <input
-              placeholder="ali@gmail.com"
+              placeholder="<%= item.email %>"
               type="email"
               class="form-control"
               id="inputemail4"
@@ -85,7 +85,7 @@
           <div class="col-md-6">
             <label for="inputtele4" class="form-label">Telephone:</label>
             <input
-              placeholder="011987899"
+              placeholder="<%= item.phoneNumber %>"
               type="number"
               class="form-control"
               id="inputtele4"
@@ -96,7 +96,7 @@
             <div class="col-md-6">
               <label for="inputage4" class="form-label">Age:</label>
               <input
-                placeholder="Your Age: ..."
+                placeholder="<%= item.age %>"
                 type="number"
                 class="form-control"
                 id="inputage4"
@@ -105,13 +105,12 @@
           </div>
 
           <div>
+            
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country:</label>
               <select id="inputCountry" class="form-select">
                 <option selected hidden disabled>Choose here ...</option>
 
-                <option>Morocco</option>
-                <option>Egypt</option>
               </select>
             </div>
           </div>
