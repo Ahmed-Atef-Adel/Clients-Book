@@ -9,7 +9,9 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 var moment = require("moment");
 var methodOverride = require("method-override");
-app.use(methodOverride("_method"));  
+app.use(methodOverride("_method"));
+
+//-----------------------------------------------------
 
 // Get request
 
@@ -48,12 +50,12 @@ app.get("/view/:id", (req, res) => {
     });
 });
 
-// Psot request
+//-----------------------------------------------------
+
+// Post request
 
 app.post("/user/add.html", (req, res) => {
-  const user = new User(req.body);
-  user
-    .save()
+  User.create(req.body)
     .then(() => {
       console.log(req.body);
       res.redirect("/");
@@ -62,6 +64,25 @@ app.post("/user/add.html", (req, res) => {
       console.log(err);
     });
 });
+
+app.post("/search", (req, res) => {
+  User.find({
+    $or: [
+      { firstName: { $regex: searchQuery } },
+      { lastName: { $regex: searchQuery } },
+      { gender: { $regex: searchQuery } },
+    ],
+  })
+    .then((result) => {
+      console.log(result);
+      res.render("user/search", { arr: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+//-----------------------------------------------------
 
 // Delete request
 
@@ -77,7 +98,31 @@ app.delete("/edit/:id", (req, res) => {
 });
 
 // app.delete("/edit/:id", (req, res) => {
-//   User.findByIdAndDelete(req.params.id)
+//   User.findByIdAndDelete(req.params.id, req.body)
+//     .then(() => {
+//       res.redirect("/");
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
+//-----------------------------------------------------
+
+//Put request:
+
+app.put("/edit/:id", (req, res) => {
+  User.updateOne({ _id: req.params.id }, req.body)
+    .then((result) => {
+      console.log(result);
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// app.put("/edit/:id", (req, res) => {
+//   User.findByIdAndUpdate(req.params.id, req.body)
 //     .then(() => {
 //       res.redirect("/");
 //     })
@@ -97,7 +142,7 @@ mongoose
   })
   .catch((err) => {
     console.log(err);
-  }); 
+  });
 
 app.post("/", (req, res) => {
   console.log(req.body);
