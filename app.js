@@ -78,7 +78,7 @@ app.post("/search", (req, res) => {
       res.render("user/search", { arr: result, moment: moment });
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err);  
     });
 });
 
