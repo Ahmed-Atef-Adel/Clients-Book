@@ -95,7 +95,7 @@ app.delete("/edit/:id", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-});
+});  
 
 // app.delete("/edit/:id", (req, res) => {
 //   User.findByIdAndDelete(req.params.id, req.body)
