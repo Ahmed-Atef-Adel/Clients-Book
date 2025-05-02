@@ -66,11 +66,16 @@ app.post("/user/add.html", (req, res) => {
 });
 
 app.post("/search", (req, res) => {
+  console.log("******************");
+  console.log(req.body);
+  const searchText = req.body.searchText.trim();
   User.find({
     $or: [
-      { firstName: { $regex: searchQuery } },
-      { lastName: { $regex: searchQuery } },
-      { gender: { $regex: searchQuery } },
+      { firstName: searchText },
+      { lastName: searchText },
+      // { age: searc hText },
+      { country: searchText },
+      { gender: searchText },
     ],
   })
     .then((result) => {
@@ -78,7 +83,7 @@ app.post("/search", (req, res) => {
       res.render("user/search", { arr: result, moment: moment });
     })
     .catch((err) => {
-      console.log(err);  
+      console.log(err);
     });
 });
 
@@ -95,7 +100,7 @@ app.delete("/edit/:id", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-});  
+});
 
 // app.delete("/edit/:id", (req, res) => {
 //   User.findByIdAndDelete(req.params.id, req.body)

@@ -131,7 +131,7 @@
                     data-bs-title="View details"
                     data-bs-placement="top"
                     class="btn btn-primary btn-sm"
-                    href="./user/view.html"
+                    href="/view/<%= obj.id %>"
                     ><i class="bi bi-eye"></i
                   ></a>
   
@@ -140,18 +140,21 @@
                     data-bs-title="Edit user"
                     data-bs-placement="top"
                     class="btn btn-primary btn-sm"
-                    href="./user/edit.html"
+                    href="/edit/<%= obj.id %>"
                   >
                     <i class="bi bi-pencil"></i>
                   </a>
-                  <button
+                  <form action="/edit/<%= obj.id %>?_method=Delete" method="post" style="display: inline;" >
+                    <button
                     data-bs-toggle="tooltip"
                     data-bs-title="Delete user"
                     data-bs-placement="top"
                     class="btn btn-danger btn-sm"
-                  >
+                    >
                     <i class="bi bi-trash"></i>
-                  </button>
+                    </button>
+                  </form>
+
                 </td>
               </tr>
               <% }) %>
