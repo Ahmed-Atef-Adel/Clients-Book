@@ -24,4 +24,4 @@ mongoose
   });
 
 app.use(allRoutes);
-app.use("/user/add.html", addUserRoute);
+app.use(addUserRoute);
