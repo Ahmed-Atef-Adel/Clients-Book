@@ -1,7 +1,7 @@
 const User = require("../models/customerSchema");
 var moment = require("moment");
 
-const aaa = (req, res) => {
+const user_index_get = (req, res) => {
   console.log("-------------------");
   User.find()
     .then((result) => {
@@ -12,7 +12,7 @@ const aaa = (req, res) => {
     });
 };
 
-const bbb = (req, res) => {
+const user_edit_get = (req, res) => {
   User.findById(req.params.id)
     .then((result) => {
       res.render("user/edit", { item: result, moment: moment });
@@ -22,7 +22,7 @@ const bbb = (req, res) => {
     });
 };
 
-const ccc = (req, res) => {
+const user_view_get = (req, res) => {
   User.findById(req.params.id)
     .then((result) => {
       res.render("user/view", { item: result, moment: moment });
@@ -32,7 +32,7 @@ const ccc = (req, res) => {
     });
 };
 
-const eee = (req, res) => {
+const user_post = (req, res) => {
   User.create(req.body)
     .then(() => {
       console.log(req.body);
@@ -43,7 +43,7 @@ const eee = (req, res) => {
     });
 };
 
-const fff = (req, res) => {
+const user_search_post = (req, res) => {
   console.log("******************");
   console.log(req.body);
   const searchText = req.body.searchText.trim();
@@ -65,7 +65,7 @@ const fff = (req, res) => {
     });
 };
 
-const ddd = (req, res) => {
+const user_delete = (req, res) => {
   User.deleteOne({ _id: req.params.id })
     .then((result) => {
       console.log(result);
@@ -76,7 +76,7 @@ const ddd = (req, res) => {
     });
 };
 
-const mmm = (req, res) => {
+const user_put = (req, res) => {
   User.updateOne({ _id: req.params.id }, req.body)
     .then((result) => {
       console.log(result);
@@ -87,4 +87,17 @@ const mmm = (req, res) => {
     });
 };
 
-module.exports = { aaa, bbb, ccc, eee, mmm, fff, ddd };
+const user_add_get = (req, res) => {
+  res.render("user/add");
+};
+
+module.exports = {
+  user_index_get,
+  user_edit_get,
+  user_view_get,
+  user_search_post,
+  user_delete,
+  user_put,
+  user_add_get,
+  user_post,
+};
