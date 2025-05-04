@@ -51,7 +51,7 @@ const user_search_post = (req, res) => {
     $or: [
       { firstName: searchText },
       { lastName: searchText },
-      // { age: searc hText },
+      { age: searchText },
       { country: searchText },
       { gender: searchText },
     ],
