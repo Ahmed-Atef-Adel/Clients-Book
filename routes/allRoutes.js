@@ -4,7 +4,7 @@ const userController = require("../controllers/userController");
 
 // Get request
 
-router.get("/", userController.user_index_get);
+router.get("/home", userController.user_index_get);
 router.get("/edit/:id", userController.user_edit_get);
 router.get("/view/:id", userController.user_view_get);
 
