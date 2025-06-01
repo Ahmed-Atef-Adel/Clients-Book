@@ -2,6 +2,12 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 
+//Level 2
+router.get("/", (req, res) => {
+  res.render("Welcome");
+});
+
+// Level 1
 // Get request
 
 router.get("/home", userController.user_index_get);
