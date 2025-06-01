@@ -35,7 +35,7 @@ const user_post = (req, res) => {
   User.create(req.body)
     .then(() => {
       console.log(req.body);
-      res.redirect("/");
+      res.redirect("/home");
     })
     .catch((err) => {
       console.log(err);
@@ -68,7 +68,7 @@ const user_delete = (req, res) => {
   User.deleteOne({ _id: req.params.id })
     .then((result) => {
       console.log(result);
-      res.redirect("/");
+      res.redirect("/home");
     })
     .catch((err) => {
       console.log(err);
@@ -79,7 +79,7 @@ const user_put = (req, res) => {
   User.updateOne({ _id: req.params.id }, req.body)
     .then((result) => {
       console.log(result);
-      res.redirect("/");
+      res.redirect("/home");
     })
     .catch((err) => {
       console.log(err);
