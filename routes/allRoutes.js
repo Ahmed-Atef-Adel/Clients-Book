@@ -7,6 +7,14 @@ router.get("/", (req, res) => {
   res.render("Welcome");
 });
 
+
+router.get("/login", (req, res) => {
+  res.render("auth/login");
+});
+
+
+
+
 // Level 1
 // Get request
 
