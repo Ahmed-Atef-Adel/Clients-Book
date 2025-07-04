@@ -12,7 +12,7 @@ const userSchema = new Schema({
   gender: String,
 }, {timestamps: true});
 
-// Create a model based on that Schema
+// Create a model based on that schema
 const User = mongoose.model("customer", userSchema);
 
 // export the model
