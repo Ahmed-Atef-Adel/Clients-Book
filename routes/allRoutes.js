@@ -1,23 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
+const AuthUser = require("../models/authUser");
 
 //Level 2
+// Get request
+
 router.get("/", (req, res) => {
   res.render("Welcome");
 });
-
 
 router.get("/login", (req, res) => {
   res.render("auth/login");
 });
 
-router.get('/signup', (req, res) =>{
-  res.render('auth/signup')
-})
+router.get("/signup", (req, res) => {
+  res.render("auth/signup");
+});
 
+// Post request
+router.post("/signup", (req, res) => {
+  AuthUser.create(req.body)
+    .then((result) => {
+      console.log(result);
+      res.render("auth/login");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
-
+//--------------------------------
 
 // Level 1
 // Get request
