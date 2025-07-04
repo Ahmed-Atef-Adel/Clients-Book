@@ -53,13 +53,43 @@
   </head>
   <body class="d-flex h-100 text-center text-bg-dark">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <%- include('./header.ejs') %>
+      <%- include('./header.ejs', {currentPage: 'login'}) %>
       <main class="px-3">
-        <h1>
-          log in
-          <span class="fw-bold">Clients Book</span>
-        </h1>
-        
+        <h1>log in</h1>
+        <form class="text-start mx-auto mt-5" style="max-width: 22em">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div class="mb-3 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="exampleCheck1"
+            />
+            <label class="form-check-label" for="exampleCheck1"
+              >Check me out</label
+            >
+          </div>
+          <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
       </main>
       <footer class="mt-auto text-white-50">
         <p>Designed and developed by Ahmed Atef @ 2025</p>
