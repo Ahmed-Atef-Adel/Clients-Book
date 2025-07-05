@@ -19,15 +19,14 @@ router.get("/signup", (req, res) => {
 });
 
 // Post request
-router.post("/signup", (req, res) => {
-  AuthUser.create(req.body)
-    .then((result) => {
-      console.log(result);
-      res.render("auth/login");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+router.post("/signup", async (req, res) => {
+  try {
+    const result = await AuthUser.create(req.body);
+    console.log(result);
+    res.render("auth/login");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 //--------------------------------
