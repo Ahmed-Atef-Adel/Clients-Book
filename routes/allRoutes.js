@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const AuthUser = require("../models/authUser");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //Level 2
 // Get request
@@ -41,6 +42,10 @@ router.post("/login", async (req, res) => {
       const match = await bcrypt.compare(req.body.password, loginUser.password);
       if (match) {
         console.log("Correct email and password");
+        var token = jwt.sign({ id: loginUser._id }, "Ahmed");
+        console.log(token);
+        res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
+        res.redirect("/home");
       } else {
         console.log("Wrong password");
       }
