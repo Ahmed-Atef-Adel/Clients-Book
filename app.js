@@ -9,6 +9,8 @@ var methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 const allRoutes = require("./routes/allRoutes");
 const addUserRoute = require("./routes/addUser");
+const cookieParser = require("cookie-parser");
+app.use(cookieParser()); 
 
 mongoose
   .connect(
@@ -25,5 +27,3 @@ mongoose
 
 app.use(allRoutes);
 app.use("/user/add", addUserRoute);
-
- 

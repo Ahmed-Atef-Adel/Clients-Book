@@ -8,7 +8,18 @@ const jwt = require("jsonwebtoken");
 //Level 2
 // Get request
 
-router.get("/", (req, res) => {
+const checkJwt = (req, res, next) => {
+  console.log("befor run the function");
+  const token = req.cookies.jwt;
+  if (token) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+};
+
+router.get("/", checkJwt, (req, res) => {
+  console.log("Hiiiiiiiiiiiii");
   res.render("Welcome");
 });
 
