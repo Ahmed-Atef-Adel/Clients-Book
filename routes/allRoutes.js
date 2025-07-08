@@ -4,27 +4,12 @@ const userController = require("../controllers/userController");
 const AuthUser = require("../models/authUser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+var authRequired = require("../middleware/middleware");
 
 //Level 2
 // Get request
 
-const authRequire = (req, res, next) => {
-  console.log("befor run the function");
-  const token = req.cookies.jwt;
-  if (token) {
-    jwt.verify(token, "Ahmed", (err) => {
-      if (err) {
-        res.redirect("/login");
-      } else {
-        next();
-      }
-    });
-  } else {
-    res.redirect("/login");
-  }
-};
-
-router.get("/", authRequire, (req, res) => {
+router.get("/", authRequired, (req, res) => {
   console.log("Hiiiiiiiiiiiii");
   res.render("Welcome");
 });
@@ -50,7 +35,6 @@ router.post("/signup", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    console.log("----------------------");
     const loginUser = await AuthUser.findOne({ email: req.body.email });
     console.log(loginUser);
     if (loginUser == null) {
@@ -77,9 +61,9 @@ router.post("/login", async (req, res) => {
 // Level 1
 // Get request
 
-router.get("/home", userController.user_index_get);
-router.get("/edit/:id", userController.user_edit_get);
-router.get("/view/:id", userController.user_view_get);
+router.get("/home", authRequired, userController.user_index_get);
+router.get("/edit/:id", authRequired, userController.user_edit_get);
+router.get("/view/:id", authRequired, userController.user_view_get);
 
 // Post request
 
