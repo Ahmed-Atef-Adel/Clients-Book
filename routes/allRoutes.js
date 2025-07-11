@@ -47,6 +47,7 @@ router.post("/login", async (req, res) => {
         console.log(token);
         res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
         res.redirect("/home");
+        console.log(loginUser);
       } else {
         console.log("Wrong password");
       }
