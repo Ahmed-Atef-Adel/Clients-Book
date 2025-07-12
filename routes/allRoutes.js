@@ -6,15 +6,38 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var authRequired = require("../middleware/middleware");
 
+const checkIfLogin = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    // Login user
+    jwt.verify(token, "Ahmed", async (err, decoded) => {
+      if (err) {
+        res.locals.user = null;
+        next();
+      } else {
+        const loginUser = await AuthUser.findById(decoded.id);
+        res.locals.user = loginUser;
+        next();
+      }
+    });
+  } else {
+    // No login user
+    res.locals.user = null;
+    next();
+  }
+};
+
+// router.get("*", checkIfLogin);
+
 //Level 2
 // Get request
 
-router.get("/", authRequired, (req, res) => {
+router.get("/", checkIfLogin, (req, res) => {
   console.log("Hiiiiiiiiiiiii");
   res.render("Welcome");
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", checkIfLogin, (req, res) => {
   res.render("auth/login");
 });
 

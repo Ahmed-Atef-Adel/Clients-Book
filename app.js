@@ -10,7 +10,7 @@ app.use(methodOverride("_method"));
 const allRoutes = require("./routes/allRoutes");
 const addUserRoute = require("./routes/addUser");
 const cookieParser = require("cookie-parser");
-app.use(cookieParser()); 
+app.use(cookieParser());
 
 mongoose
   .connect(
@@ -25,5 +25,5 @@ mongoose
     console.log(err);
   });
 
-app.use(allRoutes);
+app.use("/", allRoutes);
 app.use("/user/add", addUserRoute);
