@@ -10,6 +10,7 @@ const checkIfLogin = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
     // Login user
+    // decoded is equal data that in jwt so it's contain id and email ..etc.
     jwt.verify(token, "Ahmed", async (err, decoded) => {
       if (err) {
         res.locals.user = null;
@@ -28,6 +29,7 @@ const checkIfLogin = (req, res, next) => {
 };
 
 // router.get("*", checkIfLogin);
+
 
 //Level 2
 // Get request
