@@ -5,7 +5,11 @@
     </h3>
 
     <% if (user) { %>
-    <p>Welcome: <%= user.email %></p>
+    <div class="d-felx align-items-center">
+      <p class="me-2">Welcome: <%= user.email %></p>
+      <a class="fw-bold btn btn-light" href="/signup">Sign out</a>
+    </div>
+
     <% } else { %>
 
     <nav class="nav nav-masthead justify-content-center float-md-end">
