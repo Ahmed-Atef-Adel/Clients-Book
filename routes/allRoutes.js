@@ -30,12 +30,11 @@ const checkIfLogin = (req, res, next) => {
 
 // router.get("*", checkIfLogin);
 
-
 //Level 2
 // Get request
 
 router.get("/", checkIfLogin, (req, res) => {
-  console.log("Hiiiiiiiiiiiii");
+  console.log("Hiiiiiiiiiii");
   res.render("Welcome");
 });
 
@@ -43,12 +42,12 @@ router.get("/login", checkIfLogin, (req, res) => {
   res.render("auth/login");
 });
 
-router.get("/signup", (req, res) => {
+router.get("/signup", checkIfLogin, (req, res) => {
   res.render("auth/signup");
 });
 
 // Post request
-router.post("/signup", async (req, res) => {
+router.post("/signup", checkIfLogin, async (req, res) => {
   try {
     const result = await AuthUser.create(req.body);
     console.log(result);
@@ -87,20 +86,30 @@ router.post("/login", async (req, res) => {
 // Level 1
 // Get request
 
-router.get("/home", authRequired, userController.user_index_get);
-router.get("/edit/:id", authRequired, userController.user_edit_get);
-router.get("/view/:id", authRequired, userController.user_view_get);
+router.get("/home", checkIfLogin, authRequired, userController.user_index_get);
+router.get(
+  "/edit/:id",
+  checkIfLogin,
+  authRequired,
+  userController.user_edit_get
+);
+router.get(
+  "/view/:id",
+  checkIfLogin,
+  authRequired,
+  userController.user_view_get
+);
 
 // Post request
 
-router.post("/search", userController.user_search_post);
+router.post("/search", checkIfLogin, userController.user_search_post);
 
 //Put request:
 
-router.put("/edit/:id", userController.user_put);
+router.put("/edit/:id", checkIfLogin, userController.user_put);
 
 // Delete request
 
-router.delete("/edit/:id", userController.user_delete);
+router.delete("/edit/:id", checkIfLogin, userController.user_delete);
 
 module.exports = router;
