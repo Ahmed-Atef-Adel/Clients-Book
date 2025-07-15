@@ -5,33 +5,17 @@ const AuthUser = require("../models/authUser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var authRequired = require("../middleware/middleware");
-
-const checkIfLogin = (req, res, next) => {
-  const token = req.cookies.jwt;
-  if (token) {
-    // Login user
-    // decoded is equal data that in jwt so it's contain id and email ..etc.
-    jwt.verify(token, "Ahmed", async (err, decoded) => {
-      if (err) {
-        res.locals.user = null;
-        next();
-      } else {
-        const loginUser = await AuthUser.findById(decoded.id);
-        res.locals.user = loginUser;
-        next();
-      }
-    });
-  } else {
-    // No login user
-    res.locals.user = null;
-    next();
-  }
-};
+const checkIfLogin = require("../middleware/middleware");
 
 // router.get("*", checkIfLogin);
 
 //Level 2
 // Get request
+
+router.get("/signout", (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/");
+});
 
 router.get("/", checkIfLogin, (req, res) => {
   console.log("Hiiiiiiiiiii");
@@ -81,7 +65,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//--------------------------------
+//-------------------------------
 
 // Level 1
 // Get request
