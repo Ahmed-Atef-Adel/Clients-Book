@@ -33,8 +33,14 @@ router.get("/signup", checkIfLogin, (req, res) => {
 // Post request
 router.post("/signup", checkIfLogin, async (req, res) => {
   try {
+    const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
+    console.log(isCurrentEmail);
+    if (isCurrentEmail) {
+      console.log("This email already exist.");
+      res.render("auth/signup");
+      return;
+    }
     const result = await AuthUser.create(req.body);
-    console.log(result);
     res.render("auth/login");
   } catch (error) {
     console.log(error);
