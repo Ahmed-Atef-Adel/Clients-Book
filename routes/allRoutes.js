@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var authRequired = require("../middleware/middleware");
 const checkIfLogin = require("../middleware/middleware");
+const { check, validationResult } = require("express-validator");
 
 // router.get("*", checkIfLogin);
 
@@ -31,21 +32,37 @@ router.get("/signup", checkIfLogin, (req, res) => {
 });
 
 // Post request
-router.post("/signup", checkIfLogin, async (req, res) => {
-  try {
-    const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
-    console.log(isCurrentEmail);
-    if (isCurrentEmail) {
-      console.log("This email already exist.");
-      res.render("auth/signup");
-      return;
+router.post(
+  "/signup",
+  [
+    check("email", "please provide a valid email").isEmail(),
+    check(
+      "password",
+      "Password must be at least 8 characters with 1 upper case letter and 1 number"
+    ).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/),
+  ],
+  checkIfLogin,
+  async (req, res) => {
+    try {
+      const objError = validationResult(req);
+      console.log(objError.errors);
+      if (objError.errors.length > 0) {
+        return console.log("Invalid Email or Invalid Password.");
+      }
+
+      const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
+      if (isCurrentEmail) {
+        console.log("This email already exist.");
+        res.render("auth/signup");
+        return;
+      }
+      const result = await AuthUser.create(req.body);
+      res.render("auth/login");
+    } catch (error) {
+      console.log(error);
     }
-    const result = await AuthUser.create(req.body);
-    res.render("auth/login");
-  } catch (error) {
-    console.log(error);
   }
-});
+);
 
 router.post("/login", async (req, res) => {
   try {
