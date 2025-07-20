@@ -47,7 +47,8 @@ router.post(
       const objError = validationResult(req);
       console.log(objError.errors);
       if (objError.errors.length > 0) {
-        return console.log("Invalid Email or Invalid Password.");
+        console.log("Invalid Email or Invalid Password.");
+        return res.render("auth/signup");
       }
 
       const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
