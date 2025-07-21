@@ -43,18 +43,18 @@ router.post(
   ],
   checkIfLogin,
   async (req, res) => {
+    console.log(req.body);
     try {
       const objError = validationResult(req);
       console.log(objError.errors);
       if (objError.errors.length > 0) {
-        console.log("Invalid Email or Invalid Password.");
-        return res.render("auth/signup");
+        res.json({ arrValidationError: objError.errors });
+        return;
       }
 
       const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
       if (isCurrentEmail) {
-        console.log("This email already exist.");
-        res.render("auth/signup");
+        res.json({existEmail:"This email already exist." })
         return;
       }
       const result = await AuthUser.create(req.body);

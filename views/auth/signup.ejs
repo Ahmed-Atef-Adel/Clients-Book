@@ -57,7 +57,7 @@
       <main class="px-3">
         <h1>Sign up</h1>
         <form
-          action="/signup"
+          id="signupFrom"
           method="post"
           class="text-start mx-auto mt-5"
           style="max-width: 22em"
@@ -112,6 +112,22 @@
         <p>Designed and developed by Ahmed Atef @ 2025</p>
       </footer>
     </div>
+    <script>
+      signupForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const res = await fetch("/signup", {
+          method: "POST",
+          body: JSON.stringify({
+            email: exampleInputEmail1.value,
+            password: exampleInputPassword1.value,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+        const data = res.json();
+        console.log(data.arrValidationError);
+        console.log(data.existEmail);
+      });
+    </script>
     <script src="./js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
