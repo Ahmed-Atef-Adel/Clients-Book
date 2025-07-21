@@ -11,6 +11,7 @@ const allRoutes = require("./routes/allRoutes");
 const addUserRoute = require("./routes/addUser");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
+app.use(express.json());
 
 mongoose
   .connect(
