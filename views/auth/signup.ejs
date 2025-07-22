@@ -124,8 +124,15 @@
           headers: { "Content-Type": "application/json" },
         });
         const data = res.json();
-        console.log(data.arrValidationError);
-        console.log(data.existEmail);
+        if (data.arrValidationError) {
+          console.log(data.arrValidationError);
+        }
+        if (data.existEmail) {
+          console.log(data.existEmail);
+        }
+        if (data.id) {
+          location.assign("/home");
+        }
       });
     </script>
     <script src="./js/bootstrap.bundle.min.js"></script>
