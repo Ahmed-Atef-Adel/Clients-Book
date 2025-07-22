@@ -19,7 +19,6 @@ router.get("/signout", (req, res) => {
 });
 
 router.get("/", checkIfLogin, (req, res) => {
-  console.log("Hiiiiiiiiiii");
   res.render("Welcome");
 });
 
@@ -54,11 +53,13 @@ router.post(
 
       const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
       if (isCurrentEmail) {
-        res.json({existEmail:"This email already exist." })
+        res.json({ existEmail: "This email already exist." });
         return;
       }
-      const result = await AuthUser.create(req.body);
-      res.render("auth/login");
+      const newUser = await AuthUser.create(req.body);
+      var token = jwt.sign({ id: newUser._id }, "Ahmed");
+      res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
+      res.json({ id: newUser._id });
     } catch (error) {
       console.log(error);
     }
