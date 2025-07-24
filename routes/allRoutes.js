@@ -47,14 +47,12 @@ router.post(
       const objError = validationResult(req);
       console.log(objError.errors);
       if (objError.errors.length > 0) {
-        res.json({ arrValidationError: objError.errors });
-        return;
+        return res.json({ arrValidationError: objError.errors });
       }
 
       const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
       if (isCurrentEmail) {
-        res.json({ existEmail: "This email already exist." });
-        return;
+        return res.json({ existEmail: "This email is already exist." });
       }
       const newUser = await AuthUser.create(req.body);
       var token = jwt.sign({ id: newUser._id }, "Ahmed");
