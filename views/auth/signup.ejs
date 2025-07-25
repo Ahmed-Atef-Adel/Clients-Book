@@ -47,6 +47,12 @@
       .cover-container {
         max-width: 42em;
       }
+      #emailError,
+      #passwordError {
+        color: #ff5d79;
+        margin-left: 0.4rem;
+        font-weight: 600;
+      }
     </style>
   </head>
   <body class="d-flex h-100 text-center text-bg-dark">
@@ -81,6 +87,7 @@
               id="exampleInputEmail1"
               name="email"
             />
+            <p id="emailError"></p>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
@@ -92,6 +99,7 @@
               id="exampleInputPassword1"
               name="password"
             />
+            <p id="passwordError"></p>
           </div>
           <div class="mb-3 form-check">
             <input
@@ -113,6 +121,8 @@
     <script>
       signupForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        emailError.textContent = "";
+        passwordError.textContent = "";
         const res = await fetch("/signup", {
           method: "POST",
           body: JSON.stringify({
@@ -122,11 +132,22 @@
           headers: { "Content-Type": "application/json" },
         });
         const data = await res.json();
+
         if (data.arrValidationError) {
-          console.log(data.arrValidationError);
+          data.arrValidationError.forEach((item) => {
+            if (item.path == "email") {
+              emailError.textContent = "Please provide a valid email.";
+            }
+            if (item.path == "password") {
+              passwordError.textContent =
+                "Password must be at least 8 characters with 1 upper case letter and 1 number.";
+            }
+          });
         }
         if (data.existEmail) {
-          console.log(data.existEmail);
+          emailError.textContent = "Email already exist, Try to login";
+
+          console.log("hhiii");
         }
         if (data.id) {
           location.assign("/home");
