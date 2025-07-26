@@ -126,6 +126,7 @@
         const res = await fetch("/signup", {
           method: "POST",
           body: JSON.stringify({
+            username: exampleInputUsername.value,
             email: exampleInputEmail1.value,
             password: exampleInputPassword1.value,
           }),
@@ -145,9 +146,7 @@
           });
         }
         if (data.existEmail) {
-          emailError.textContent = "Email already exist, Try to login";
-
-          console.log("hhiii");
+          emailError.textContent = data.existEmail;
         }
         if (data.id) {
           location.assign("/home");
