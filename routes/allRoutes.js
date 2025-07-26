@@ -42,18 +42,18 @@ router.post(
   ],
   checkIfLogin,
   async (req, res) => {
-    console.log(req.body);
     try {
+      // Check validation (email & password)
       const objError = validationResult(req);
-      console.log(objError.errors);
       if (objError.errors.length > 0) {
         return res.json({ arrValidationError: objError.errors });
       }
-
+      // Check if email already exist ?
       const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
       if (isCurrentEmail) {
         return res.json({ existEmail: "This email is already exist." });
       }
+      // Create new user and login
       const newUser = await AuthUser.create(req.body);
       var token = jwt.sign({ id: newUser._id }, "Ahmed");
       res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
@@ -67,20 +67,21 @@ router.post(
 router.post("/login", async (req, res) => {
   try {
     const loginUser = await AuthUser.findOne({ email: req.body.email });
-    console.log(loginUser);
+
     if (loginUser == null) {
-      console.log("This email is not exist in DATABASE !");
+      return res.json({
+        notExistEmail: "This email is not exist, Try to signup.",
+      });
     } else {
       const match = await bcrypt.compare(req.body.password, loginUser.password);
       if (match) {
-        console.log("Correct email and password");
         var token = jwt.sign({ id: loginUser._id }, "Ahmed");
-        console.log(token);
         res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
-        res.redirect("/home");
-        console.log(loginUser);
+        res.json({ id: loginUser._id });
       } else {
-        console.log("Wrong password");
+        return res.json({
+          inCorrectPass: `Password is not correct for ${req.body.email}`,
+        });
       }
     }
   } catch (error) {
