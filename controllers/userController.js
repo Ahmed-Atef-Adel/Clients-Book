@@ -1,5 +1,6 @@
-const User = require("../models/customerSchema");
+const User = require("../models/userSchema");
 var moment = require("moment");
+
 
 const user_index_get = (req, res) => {
   User.find()
@@ -98,5 +99,5 @@ module.exports = {
   user_delete,
   user_put,
   user_add_get,
-  user_post,
+  user_post
 };

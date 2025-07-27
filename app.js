@@ -12,11 +12,10 @@ const addUserRoute = require("./routes/addUser");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(express.json());
+require("dotenv").config();
 
 mongoose
-  .connect(
-    "mongodb+srv://ahmedatef8885:Password12345@cluster0.n8myt.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGODB_URL)
   .then(() => {
     app.listen(port, () => {
       console.log(`http://localhost:${port}/`);
