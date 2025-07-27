@@ -1,8 +1,16 @@
 <header class="mb-auto">
   <div class="d-flex justify-content-between align-items-center">
+    <% if (user) { %>
     <h3 class="float-md-start mb-0">
       <a class="btn fs-2 text-white fw-bold" href="/home">Home</a>
     </h3>
+
+    <% } else { %>
+
+    <h3 class="float-md-start mb-0">
+      <a class="btn fs-2 text-white fw-bold" href="/">Home</a>
+    </h3>
+    <% } %>
 
     <% if (user) { %>
     <div class="d-felx align-items-center">

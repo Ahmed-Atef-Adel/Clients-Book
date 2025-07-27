@@ -1,36 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
-const AuthUser = require("../models/authUser");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const authController = require('../controllers/authController')
 var authRequired = require("../middleware/middleware");
 const checkIfLogin = require("../middleware/middleware");
-const { check, validationResult } = require("express-validator");
+const { check } = require("express-validator");
 
 // router.get("*", checkIfLogin);
 
 //Level 2
 // Get request
 
-router.get("/signout", (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
-});
+router.get("/signout", authController.authUser_signout_get);
 
-router.get("/", checkIfLogin, (req, res) => {
-  res.render("Welcome");
-});
+router.get("/", checkIfLogin, authController.authUser_welcome_get);
 
-router.get("/login", checkIfLogin, (req, res) => {
-  res.render("auth/login");
-});
+router.get("/login", checkIfLogin, authController.authUser_login_get);
 
-router.get("/signup", checkIfLogin, (req, res) => {
-  res.render("auth/signup");
-});
+router.get("/signup", checkIfLogin, authController.authUser_signup_get);
 
 // Post request
+
 router.post(
   "/signup",
   [
@@ -41,53 +31,10 @@ router.post(
     ).matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/),
   ],
   checkIfLogin,
-  async (req, res) => {
-    try {
-      // Check validation (email & password)
-      const objError = validationResult(req);
-      if (objError.errors.length > 0) {
-        return res.json({ arrValidationError: objError.errors });
-      }
-      // Check if email already exist ?
-      const isCurrentEmail = await AuthUser.findOne({ email: req.body.email });
-      if (isCurrentEmail) {
-        return res.json({ existEmail: "This email is already exist." });
-      }
-      // Create new user and login
-      const newUser = await AuthUser.create(req.body);
-      var token = jwt.sign({ id: newUser._id }, "Ahmed");
-      res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
-      res.json({ id: newUser._id });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  authController.authUser_signup_post
 );
 
-router.post("/login", async (req, res) => {
-  try {
-    const loginUser = await AuthUser.findOne({ email: req.body.email });
-
-    if (loginUser == null) {
-      return res.json({
-        notExistEmail: "This email is not exist, Try to signup.",
-      });
-    } else {
-      const match = await bcrypt.compare(req.body.password, loginUser.password);
-      if (match) {
-        var token = jwt.sign({ id: loginUser._id }, "Ahmed");
-        res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 });
-        res.json({ id: loginUser._id });
-      } else {
-        return res.json({
-          inCorrectPass: `Password is not correct for ${req.body.email}`,
-        });
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
+router.post("/login", authController.authUser_login_post);
 
 //-------------------------------
 
