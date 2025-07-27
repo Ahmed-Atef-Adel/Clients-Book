@@ -9,7 +9,7 @@ const authUser_signout_get = (req, res) => {
 };
 
 const authUser_welcome_get = (req, res) => {
-  res.render("Welcome");
+  res.render("welcome");
 };
 
 const authUser_login_get = (req, res) => {
