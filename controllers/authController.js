@@ -22,7 +22,7 @@ const authUser_signup_get = (req, res) => {
 
 const authUser_signup_post = async (req, res) => {
   try {
-    // Check validation (email & password)
+    // Check validation (email & password).
     const objError = validationResult(req);
     if (objError.errors.length > 0) {
       return res.json({ arrValidationError: objError.errors });
