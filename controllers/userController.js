@@ -2,6 +2,19 @@ const AuthUser = require("../models/authUser");
 var moment = require("moment");
 var jwt = require("jsonwebtoken");
 
+
+const user_post = (req, res) => {
+  AuthUser.create(req.body)
+    .then(() => {
+      console.log(req.body);
+      res.redirect("/home");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+
 const user_index_get = (req, res) => {
   var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
   console.log(decoded.id);
@@ -34,16 +47,7 @@ const user_view_get = (req, res) => {
     });
 };
 
-const user_post = (req, res) => {
-  AuthUser.create(req.body)
-    .then(() => {
-      console.log(req.body);
-      res.redirect("/home");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+
 
 const user_search_post = (req, res) => {
   console.log("******************");
