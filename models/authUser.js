@@ -7,9 +7,21 @@ const authUserSchema = new Schema({
   username: String,
   email: String,
   password: String,
+  customerInfo: [
+    {
+      firstName: String,
+      lastName: String,
+      email: String,
+      phoneNumber: String,
+      age: Number,
+      country: String,
+      gender: String,
+    },
+  ],
 });
+// {timestamps: true}
 
-// Hashing Password 
+// Hashing Password
 
 authUserSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();

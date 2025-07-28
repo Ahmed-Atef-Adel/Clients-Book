@@ -1,7 +1,8 @@
-const User = require("../models/userSchema");
+const AuthUser = require("../models/authUser");
 var moment = require("moment");
 
 
+//   /home
 const user_index_get = (req, res) => {
   User.find()
     .then((result) => {
