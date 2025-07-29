@@ -1,40 +1,10 @@
 const AuthUser = require("../models/authUser");
 var moment = require("moment");
+var jwt = require("jsonwebtoken");
 
-
-//   /home
-const user_index_get = (req, res) => {
-  User.find()
-    .then((result) => {
-      res.render("index", { arr: result, moment: moment });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-const user_edit_get = (req, res) => {
-  User.findById(req.params.id)
-    .then((result) => {
-      res.render("user/edit", { item: result, moment: moment });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-const user_view_get = (req, res) => {
-  User.findById(req.params.id)
-    .then((result) => {
-      res.render("user/view", { item: result, moment: moment });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
 
 const user_post = (req, res) => {
-  User.create(req.body)
+  AuthUser.create(req.body)
     .then(() => {
       console.log(req.body);
       res.redirect("/home");
@@ -44,11 +14,46 @@ const user_post = (req, res) => {
     });
 };
 
+
+const user_index_get = (req, res) => {
+  var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
+  console.log(decoded.id);
+  AuthUser.findById(decoded.id)
+    .then((result) => {
+      res.render("index", { arr: result.customerInfo, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const user_edit_get = (req, res) => {
+  AuthUser.findById(req.params.id)
+    .then((result) => {
+      res.render("user/edit", { item: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const user_view_get = (req, res) => {
+  AuthUser.findById(req.params.id)
+    .then((result) => {
+      res.render("user/view", { item: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+
+
 const user_search_post = (req, res) => {
   console.log("******************");
   console.log(req.body);
   const searchText = req.body.searchText.trim();
-  User.find({
+  AuthUser.find({
     $or: [
       { firstName: searchText },
       { lastName: searchText },
@@ -67,7 +72,7 @@ const user_search_post = (req, res) => {
 };
 
 const user_delete = (req, res) => {
-  User.deleteOne({ _id: req.params.id })
+  AuthUser.deleteOne({ _id: req.params.id })
     .then((result) => {
       console.log(result);
       res.redirect("/home");
@@ -78,7 +83,7 @@ const user_delete = (req, res) => {
 };
 
 const user_put = (req, res) => {
-  User.updateOne({ _id: req.params.id }, req.body)
+  AuthUser.updateOne({ _id: req.params.id }, req.body)
     .then((result) => {
       console.log(result);
       res.redirect("/home");
@@ -100,5 +105,5 @@ module.exports = {
   user_delete,
   user_put,
   user_add_get,
-  user_post
+  user_post,
 };
