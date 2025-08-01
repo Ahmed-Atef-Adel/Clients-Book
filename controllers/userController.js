@@ -15,7 +15,6 @@ const user_index_get = (req, res) => {
 
 const user_post = (req, res) => {
   var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
-  console.log(req.body);
   AuthUser.updateOne({ _id: decoded.id }, { $push: { customerInfo: req.body } })
     .then(() => {
       res.redirect("/home");
@@ -26,11 +25,26 @@ const user_post = (req, res) => {
 };
 
 const user_delete = (req, res) => {
-  var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
-  AuthUser.deleteOne({ _id: decoded.id })
+  AuthUser.updateOne(
+    { "customerInfo._id": req.params.id },
+    { $pull: { customerInfo: { _id: req.params.id } } }
+  )
     .then((result) => {
       console.log(result);
       res.redirect("/home");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const user_view_get = (req, res) => {
+  AuthUser.findOne({
+    "customerInfo._id": req.params.id,
+  })
+    .then((result) => {
+      const customer = result.customerInfo.id(req.params.id);
+      res.render("user/view", { item: customer, moment: moment });
     })
     .catch((err) => {
       console.log(err);
@@ -41,16 +55,6 @@ const user_edit_get = (req, res) => {
   AuthUser.findById(req.params.id)
     .then((result) => {
       res.render("user/edit", { item: result, moment: moment });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-const user_view_get = (req, res) => {
-  AuthUser.findById(req.params.id)
-    .then((result) => {
-      res.render("user/view", { item: result, moment: moment });
     })
     .catch((err) => {
       console.log(err);
