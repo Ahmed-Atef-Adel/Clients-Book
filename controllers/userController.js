@@ -52,9 +52,23 @@ const user_view_get = (req, res) => {
 };
 
 const user_edit_get = (req, res) => {
-  AuthUser.findById(req.params.id)
+  AuthUser.findOne({ 'customerInfo._id': req.params.id})
     .then((result) => {
-      res.render("user/edit", { item: result, moment: moment });
+      const customer = result.customerInfo.id(req.params.id)
+      console.log('======================')
+      console.log(customer)
+      res.render("user/edit", { item: customer, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const user_put = (req, res) => {
+  AuthUser.updateOne({ _id: req.params.id }, req.body)
+    .then((result) => {
+      console.log(result);
+      res.redirect("/home");
     })
     .catch((err) => {
       console.log(err);
@@ -83,16 +97,7 @@ const user_search_post = (req, res) => {
     });
 };
 
-const user_put = (req, res) => {
-  AuthUser.updateOne({ _id: req.params.id }, req.body)
-    .then((result) => {
-      console.log(result);
-      res.redirect("/home");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+
 
 const user_add_get = (req, res) => {
   res.render("user/add");
