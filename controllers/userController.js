@@ -52,11 +52,9 @@ const user_view_get = (req, res) => {
 };
 
 const user_edit_get = (req, res) => {
-  AuthUser.findOne({ 'customerInfo._id': req.params.id})
+  AuthUser.findOne({ "customerInfo._id": req.params.id })
     .then((result) => {
-      const customer = result.customerInfo.id(req.params.id)
-      console.log('======================')
-      console.log(customer)
+      const customer = result.customerInfo.id(req.params.id);
       res.render("user/edit", { item: customer, moment: moment });
     })
     .catch((err) => {
@@ -65,9 +63,11 @@ const user_edit_get = (req, res) => {
 };
 
 const user_put = (req, res) => {
-  AuthUser.updateOne({ _id: req.params.id }, req.body)
+  AuthUser.updateOne(
+    { "customerInfo._id": req.params.id },
+    { "customerInfo.$": req.body }
+  )
     .then((result) => {
-      console.log(result);
       res.redirect("/home");
     })
     .catch((err) => {
@@ -75,32 +75,29 @@ const user_put = (req, res) => {
     });
 };
 
+const user_add_get = (req, res) => {
+  res.render("user/add");
+};
+
 const user_search_post = (req, res) => {
-  console.log("******************");
-  console.log(req.body);
   const searchText = req.body.searchText.trim();
-  AuthUser.find({
-    $or: [
-      { firstName: searchText },
-      { lastName: searchText },
-      { age: searchText },
-      { country: searchText },
-      { gender: searchText },
-    ],
-  })
+  var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
+  AuthUser.findOne({ _id: decoded.id })
     .then((result) => {
-      console.log(result);
-      res.render("user/search", { arr: result, moment: moment });
+      const searchCustomers = result.customerInfo.filter((item) => {
+        return (
+          item.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.gender.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.country.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.age.includes(searchText)
+        );
+      });
+      res.render("user/search", { arr: searchCustomers, moment: moment });
     })
     .catch((err) => {
       console.log(err);
     });
-};
-
-
-
-const user_add_get = (req, res) => {
-  res.render("user/add");
 };
 
 module.exports = {
