@@ -1,12 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
-const authController = require('../controllers/authController')
+const authController = require("../controllers/authController");
 var authRequired = require("../middleware/middleware");
 const checkIfLogin = require("../middleware/middleware");
 const { check } = require("express-validator");
+const multer = require("multer");
+const upload = multer({ storage: multer.diskStorage({}) });
 
 // router.get("*", checkIfLogin);
+
+//Level 3
+// post request
+
+router.post("/update-profile", upload.single("avatar"), (req, res, next) => {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+  console.log(req.file);
+});
 
 //Level 2
 // Get request
