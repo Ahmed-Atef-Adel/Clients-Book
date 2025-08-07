@@ -5,53 +5,19 @@ const authController = require("../controllers/authController");
 var authRequired = require("../middleware/middleware");
 const checkIfLogin = require("../middleware/middleware");
 const { check } = require("express-validator");
+
 const multer = require("multer");
 const upload = multer({ storage: multer.diskStorage({}) });
 const cloudinary = require("cloudinary").v2;
 
 
-import { v2 as cloudinary } from 'cloudinary';
-
-(async function() {
-
     // Configuration
     cloudinary.config({ 
         cloud_name: 'de02snsex', 
         api_key: '667354649864489', 
-        api_secret: '<your_api_secret>' // Click 'View API Keys' above to copy your API secret
+        api_secret: 'AGOi-O6A6IjNfiv-cyP2UoSMl48'
     });
     
-    // Upload an image
-     const uploadResult = await cloudinary.uploader
-       .upload(
-           'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
-               public_id: 'shoes',
-           }
-       )
-       .catch((error) => {
-           console.log(error);
-       });
-    
-    console.log(uploadResult);
-    
-    // Optimize delivery by resizing and applying auto-format and auto-quality
-    const optimizeUrl = cloudinary.url('shoes', {
-        fetch_format: 'auto',
-        quality: 'auto'
-    });
-    
-    console.log(optimizeUrl);
-    
-    // Transform the image: auto-crop to square aspect_ratio
-    const autoCropUrl = cloudinary.url('shoes', {
-        crop: 'auto',
-        gravity: 'auto',
-        width: 500,
-        height: 500,
-    });
-    
-    console.log(autoCropUrl);    
-})();
 
 // router.get("*", checkIfLogin);
 
@@ -63,8 +29,15 @@ router.post("/update-profile", upload.single("avatar"), (req, res, next) => {
   // req.body will hold the text fields, if there were any
   console.log(req.file);
 
-  cloudinary.v2.uploader.upload("home", { upload_preset: "my_pre" });
-  console.log(result, error);
+  cloudinary.uploader.upload(
+    req.file.path,
+    (error, result) => {
+      console.log('===================================')
+      if (result) {
+        console.log(result.secure_url)
+      }
+      console.log(result, error);
+    });
 });
 
 //Level 2
