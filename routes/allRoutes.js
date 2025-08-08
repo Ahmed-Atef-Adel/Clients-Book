@@ -9,15 +9,15 @@ const { check } = require("express-validator");
 const multer = require("multer");
 const upload = multer({ storage: multer.diskStorage({}) });
 const cloudinary = require("cloudinary").v2;
+const AuthUser = require("../models/authUser");
+var jwt = require("jsonwebtoken");
 
-
-    // Configuration
-    cloudinary.config({ 
-        cloud_name: 'de02snsex', 
-        api_key: '667354649864489', 
-        api_secret: 'AGOi-O6A6IjNfiv-cyP2UoSMl48'
-    });
-    
+// Configuration
+cloudinary.config({
+  cloud_name: "de02snsex",
+  api_key: "667354649864489",
+  api_secret: "AGOi-O6A6IjNfiv-cyP2UoSMl48",
+});
 
 // router.get("*", checkIfLogin);
 
@@ -29,15 +29,19 @@ router.post("/update-profile", upload.single("avatar"), (req, res, next) => {
   // req.body will hold the text fields, if there were any
   console.log(req.file);
 
-  cloudinary.uploader.upload(
-    req.file.path,
-    (error, result) => {
-      console.log('===================================')
-      if (result) {
-        console.log(result.secure_url)
-      }
-      console.log(result, error);
-    });
+  cloudinary.uploader.upload(req.file.path, async (error, result) => {
+    console.log("===================================");
+    if (result) {
+      var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
+      const avatar = await AuthUser.updateOne(
+        { _id: decoded.id },
+        { profileImage: result.secure_url }
+      );
+      console.log(avatar);
+      res.redirect("/home");
+    }
+    console.log(result, error);
+  });
 });
 
 //Level 2
