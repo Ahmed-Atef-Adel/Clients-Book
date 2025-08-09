@@ -17,6 +17,8 @@ const authUserSchema = new Schema({
       age: String,
       country: String,
       gender: String,
+      createdAt: Date,
+      updatedAt: { type: Date, default: Date.now },
     },
   ],
 });
