@@ -27,5 +27,3 @@ mongoose
 
 app.use("/", allRoutes);
 app.use("/user/add", addUserRoute);
-
-

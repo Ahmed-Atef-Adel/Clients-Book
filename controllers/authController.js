@@ -2,6 +2,15 @@ const AuthUser = require("../models/authUser");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cloudinary = require("cloudinary").v2;
+require("dotenv").config();
+
+// Configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 const authUser_signout_get = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
@@ -67,6 +76,19 @@ const authUser_login_post = async (req, res) => {
   }
 };
 
+const post_profileImage =  (req, res, next) => {
+  cloudinary.uploader.upload(req.file.path, {folder: 'Clients-Book/profile-images'}, async (error, result) => {
+    if (result) {
+      var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
+      const avatar = await AuthUser.updateOne(
+        { _id: decoded.id },
+        { profileImage: result.secure_url }
+      );
+      res.redirect("/home");
+    }
+  });
+};
+
 module.exports = {
   authUser_signout_get,
   authUser_welcome_get,
@@ -74,4 +96,5 @@ module.exports = {
   authUser_signup_get,
   authUser_signup_post,
   authUser_login_post,
+  post_profileImage,
 };
