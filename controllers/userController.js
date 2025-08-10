@@ -15,8 +15,46 @@ const user_index_get = (req, res) => {
 
 const user_post = (req, res) => {
   var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
-  AuthUser.updateOne({ _id: decoded.id }, { $push: { customerInfo: req.body } })
+  AuthUser.updateOne(
+    { _id: decoded.id },
+    {
+      $push: {
+        customerInfo: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          phoneNumber: req.body.phoneNumber,
+          age: req.body.age,
+          country: req.body.country,
+          gender: req.body.gender,
+          createdAt: new Date(),
+        },
+      },
+    }
+  )
     .then(() => {
+      res.redirect("/home");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const user_put = (req, res) => {
+  AuthUser.updateOne(
+    { "customerInfo._id": req.params.id },
+    {
+      "customerInfo.$.firstName": req.body.firstName,
+      "customerInfo.$.lastName": req.body.lastName,
+      "customerInfo.$.email": req.body.email,
+      "customerInfo.$.phoneNumber": req.body.phoneNumber,
+      "customerInfo.$.age": req.body.age,
+      "customerInfo.$.country": req.body.country,
+      "customerInfo.$.gender": req.body.gender,
+      "customerInfo.$.updatedAt": new Date (),
+    }
+  )
+    .then((result) => {
       res.redirect("/home");
     })
     .catch((err) => {
@@ -56,19 +94,6 @@ const user_edit_get = (req, res) => {
     .then((result) => {
       const customer = result.customerInfo.id(req.params.id);
       res.render("user/edit", { item: customer, moment: moment });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-const user_put = (req, res) => {
-  AuthUser.updateOne(
-    { "customerInfo._id": req.params.id },
-    { "customerInfo.$": req.body }
-  )
-    .then((result) => {
-      res.redirect("/home");
     })
     .catch((err) => {
       console.log(err);
