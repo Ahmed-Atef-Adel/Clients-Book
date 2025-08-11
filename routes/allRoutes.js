@@ -9,8 +9,6 @@ const { check } = require("express-validator");
 const multer = require("multer");
 const upload = multer({ storage: multer.diskStorage({}) });
 
-
-
 // router.get("*", checkIfLogin);
 
 //Level 3
@@ -18,6 +16,7 @@ const upload = multer({ storage: multer.diskStorage({}) });
 
 router.post(
   "/update-profile",
+  checkIfLogin,
   upload.single("avatar"),
   authController.post_profileImage
 );
