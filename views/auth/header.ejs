@@ -1,35 +1,29 @@
 <header class="mb-auto">
   <div class="d-flex justify-content-between align-items-center">
     <% if (user) { %>
-      <h3 class="float-md-start mb-0">
-        <a class="btn fs-2 text-white fw-bold" href="/home">Home</a>
-      </h3>
+    <h3 class="float-md-start mb-0">
+      <a class="btn fs-2 text-white fw-bold" href="/home">Home</a>
+    </h3>
     <% } else { %>
-      <h3 class="float-md-start mb-0">
-        <a class="btn fs-2 text-white fw-bold" href="/">Home</a>
-      </h3>
+    <h3 class="float-md-start mb-0">
+      <a class="btn fs-2 text-white fw-bold" href="/">Home</a>
+    </h3>
     <% } %>
 
     <% if (user) { %>
-      <div class="d-flex align-items-center">
-        <p class="me-2 mb-0">Welcome: <%= user.email %></p>
-        <a class="fw-bold btn btn-light" href="/signout">Sign out</a>
-      </div>
+    <div class="d-flex align-items-center">
+      <p class="me-2 mb-0">Welcome: <%= user.email %></p>
+      <a class="fw-bold btn btn-light" href="/signout">Sign out</a>
+    </div>
     <% } else { %>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a
-          class="fw-bold auth-link <%= currentPage == 'login' ? 'btn btn-light' : '' %>"
-          href="/login"
-        >
-          Log in
-        </a>
-        <a
-          class="fw-bold auth-link ms-2 <%= currentPage == 'signup' ? 'btn btn-light' : '' %>"
-          href="/signup"
-        >
-          Sign up
-        </a>
-      </nav>
+    <nav class="nav nav-masthead justify-content-center float-md-end">
+      <a class="fw-bold auth-link <%= currentPage == 'login' ? 'btn btn-light' : '' %>" href="/login">
+        Log in
+      </a>
+      <a class="fw-bold auth-link ms-2 <%= currentPage == 'signup' ? 'btn btn-light' : '' %>" href="/signup">
+        Sign up
+      </a>
+    </nav>
     <% } %>
   </div>
 

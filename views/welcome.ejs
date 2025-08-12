@@ -1,95 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100" data-bs-theme="auto">
-  <head>
-    <script src="./js/color-modes.js"></script>
-    <link
-      rel="stylesheet"
-      href="./bootstrap-icons-1.10.5/font/bootstrap-icons.min.css"
-    />
-    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta
-      name="author"
-      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
-    />
-    <meta name="generator" content="Hugo 0.112.5" />
-    <title>Home page</title>
 
-    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+<head>
+  <script src="./js/color-modes.js"></script>
+  <link rel="stylesheet" href="./bootstrap-icons-1.10.5/font/bootstrap-icons.min.css" />
+  <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+  <meta name="generator" content="Hugo 0.112.5" />
+  <title>Home page</title>
 
-    <link rel="stylesheet" href="./css/dark-light.css" />
+  <link href="./css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Custom styles for this template -->
-    <link href="./css/sidebars.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./css/myStyle.css" />
-    <style>
-      /*
+  <link rel="stylesheet" href="./css/dark-light.css" />
+
+  <!-- Custom styles for this template -->
+  <link href="./css/sidebars.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/myStyle.css" />
+  <style>
+    /*
  * Globals
  */
 
-      /* Custom default button */
-      .btn-light,
-      .btn-light:hover,
-      .btn-light:focus {
-        color: #333;
-        text-shadow: none; /* Prevent inheritance from `body` */
-      }
+    /* Custom default button */
+    .btn-light,
+    .btn-light:hover,
+    .btn-light:focus {
+      color: #333;
+      text-shadow: none;
+      /* Prevent inheritance from `body` */
+    }
 
-      /*
+    /*
  * Base structure
  */
 
-      body {
-        text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
-        box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
-      }
+    body {
+      text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+      box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+    }
 
-      .cover-container {
-        max-width: 42em;
-      }
-    </style>
-  </head>
-  <body class="d-flex h-100 text-center text-bg-dark">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <%- include('./auth/header.ejs', {currentPage: 'welcome'}) %>
-      <main class="px-3">
-        <h1>
-          Welcome to
-          <span class="fw-bold">Clients Book 👋🏻</span>
-        </h1>
-        <p class="lead mt-4 mb-4">
-          To help you with storing and organizing the data created and collected
-          by an organizaion. The data management process aim to make sure that
-          data in corporate system in accurate, available and accessible.
-        </p>
-        <p class="lead">
-          <% if (user) { %>
+    .cover-container {
+      max-width: 42em;
+    }
+  </style>
+</head>
 
-          <a
-            href="/home"
-            class="btn btn-lg btn-light fw-bold border-white bg-white"
-            >Dashboard</a
-          >
+<body class="d-flex h-100 text-center text-bg-dark">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <%- include('./auth/header.ejs', {currentPage: 'welcome'}) %>
+    <main class="px-3">
+      <h1>
+        Welcome to
+        <span class="fw-bold">Clients Book 👋🏻</span>
+      </h1>
+      <p class="lead mt-4 mb-4">
+        To help you with storing and organizing the data created and collected
+        by an organizaion. The data management process aim to make sure that
+        data in corporate system in accurate, available and accessible.
+      </p>
+      <p class="lead">
+        <% if (user) { %>
 
-          <% } else { %>
+        <a href="/home" class="btn btn-lg btn-light fw-bold border-white bg-white">Dashboard</a>
 
-          <a
-            href="/login"
-            class="btn btn-lg btn-light fw-bold border-white bg-white"
-            >Dashboard</a
-          >
+        <% } else { %>
 
-          <% } %>
+        <a href="/login" class="btn btn-lg btn-light fw-bold border-white bg-white">Dashboard</a>
 
-          <a href="#" class="btn btn-lg fw-bold">Contact sales</a>
-        </p>
-      </main>
-      <footer class="mt-auto text-white-50">
-        <p>Designed and developed by Ahmed Atef @ 2025</p>
-      </footer>
-    </div>
-    <script src="./js/bootstrap.bundle.min.js"></script>
-  </body>
+        <% } %>
+
+        <a href="#" class="btn btn-lg fw-bold">Contact sales</a>
+      </p>
+    </main>
+    <footer class="mt-auto text-white-50">
+      <p>Designed and developed by Ahmed Atef @ 2025</p>
+    </footer>
+  </div>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

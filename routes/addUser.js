@@ -5,7 +5,6 @@ var authRequired = require("../middleware/middleware");
 const jwt = require("jsonwebtoken");
 const AuthUser = require("../models/authUser");
 
-
 const checkIfLogin = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {

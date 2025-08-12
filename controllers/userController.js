@@ -51,7 +51,7 @@ const user_put = (req, res) => {
       "customerInfo.$.age": req.body.age,
       "customerInfo.$.country": req.body.country,
       "customerInfo.$.gender": req.body.gender,
-      "customerInfo.$.updatedAt": new Date (),
+      "customerInfo.$.updatedAt": new Date(),
     }
   )
     .then((result) => {
@@ -68,7 +68,6 @@ const user_delete = (req, res) => {
     { $pull: { customerInfo: { _id: req.params.id } } }
   )
     .then((result) => {
-      console.log(result);
       res.redirect("/home");
     })
     .catch((err) => {

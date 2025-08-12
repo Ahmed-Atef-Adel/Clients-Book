@@ -5,13 +5,11 @@ const authController = require("../controllers/authController");
 var authRequired = require("../middleware/middleware");
 const checkIfLogin = require("../middleware/middleware");
 const { check } = require("express-validator");
-
 const multer = require("multer");
 const upload = multer({ storage: multer.diskStorage({}) });
 
 // router.get("*", checkIfLogin);
 
-//Level 3
 // post request
 
 router.post(
@@ -21,7 +19,6 @@ router.post(
   authController.post_profileImage
 );
 
-//Level 2
 // Get request
 
 router.get("/signout", authController.authUser_signout_get);
@@ -51,7 +48,6 @@ router.post("/login", authController.authUser_login_post);
 
 //-------------------------------
 
-// Level 1
 // Get request
 
 router.get("/home", checkIfLogin, authRequired, userController.user_index_get);

@@ -38,4 +38,4 @@ const authRequired = (req, res, next) => {
   }
 };
 
-module.exports = (authRequired, checkIfLogin );
+module.exports = (authRequired, checkIfLogin);
