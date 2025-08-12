@@ -76,9 +76,10 @@ const authUser_login_post = async (req, res) => {
   }
 };
 
-const post_profileImage =  (req, res, next) => {
+const post_profileImage = async (req, res, next) => {
   cloudinary.uploader.upload(req.file.path, {folder: 'Clients-Book/profile-images'}, async (error, result) => {
     if (result) {
+      console.log(result.secure_url)
       var decoded = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET_KEY);
       const avatar = await AuthUser.updateOne(
         { _id: decoded.id },
