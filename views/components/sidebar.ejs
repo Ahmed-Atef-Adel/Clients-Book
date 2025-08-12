@@ -41,7 +41,7 @@
       <li><a class="dropdown-item" href="#">New project...</a></li>
       <li><a class="dropdown-item" href="#">Settings</a></li>
       <li>
-        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="dropdown-item" href="#">
+        <button data-bs-toggle="modal" data-bs-target="#changeImageModal" class="dropdown-item" href="#">
           Profile Image
         </button>
       </li>
@@ -54,7 +54,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="changeImageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form action="/update-profile" method="post" enctype="multipart/form-data" class="modal-content">
       <div class="modal-header">
@@ -68,7 +68,7 @@
         <label class="btn btn-secondary" for="inputFile">
           <i class="bi bi-plus"></i> Upload image</label>
         <input style="display: none" id="inputFile" type="file" name="avatar" />
-        <img id="profileImage" style="border-radius: 50%" src="<%= user.profileImage? user.profileImage : '../img/default profile image.png'  %>" alt="" width="150" height="150" />
+        <img id="profileImage" style="border-radius: 50%" src="<%= user.profileImage? user.profileImage : '../img/default profile image.png' %>" alt="" width="150" height="150" />
       </div>
 
       <div class="modal-footer">
